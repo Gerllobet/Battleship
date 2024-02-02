@@ -23,3 +23,6 @@ def thereIsNoNumber(s):
         return True
     else:
         return False
+
+def someBoxOccupied(b, x, y, o):
+    
