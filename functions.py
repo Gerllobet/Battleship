@@ -49,3 +49,25 @@ def someBoxOccupied(b, y, x, o):
             i += 1
         return(False)
     
+def applyPlay(b, s):
+    l = b[int(s[0])]
+    print(l)
+    if(s[2] in "XO"):
+        print("This box has already been played! You've missed a shot!")
+        print(b)
+        return(b)
+    if(s[2] in "S"):
+        print("IMPACT!")
+        l[int(s[2])] = "O"
+        b[int(s[0])] = l
+        print(b)
+        return(b)
+    if(s[2] in "W"):
+        print("WATER!")
+        l[int(s[2])] = "X"
+        b[int(s[0])] = l
+        print(b)
+        return(b)
+    
+
+applyPlay([["W","W","W","W","W"], ["X","X","X","X","X"], ["O","O","O","O","O"], ["W","W","W","W","W"], ["W","W","W","W","W"]], "3:0")
