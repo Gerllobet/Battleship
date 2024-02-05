@@ -24,5 +24,28 @@ def thereIsNoNumber(s):
     else:
         return False
 
-def someBoxOccupied(b, x, y, o):
+def someBoxOccupied(b, y, x, o):
+    if(o == "V"):
+        if(y > 2):
+            return(True)
+        
+        i = 0
+        for l in b:
+            if(i >= y):
+                if(l[x] != "W"):
+                    return(True)
+            i += 1
+        return(False)
+    
+    if(o == "H"):
+        if(x > 2):
+            return(True)
+        
+        i = 0
+        l = b[y]
+        while(i < 3):
+            if(l[x+1] != "W"):
+                return(True)
+            i += 1
+        return(False)
     
