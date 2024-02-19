@@ -51,23 +51,41 @@ def someBoxOccupied(b, y, x, o):
     
 def applyPlay(b, s):
     l = b[int(s[0])]
-    print(l)
-    if(s[2] in "XO"):
+    if(l[int(s[-1])] in "XO"):
         print("This box has already been played! You've missed a shot!")
-        print(b)
         return(b)
-    if(s[2] in "S"):
+    if(l[int(s[-1])] in "S"):
         print("IMPACT!")
-        l[int(s[2])] = "O"
+        l[int(s[-1])] = "O"
         b[int(s[0])] = l
-        print(b)
         return(b)
-    if(s[2] in "W"):
+    if(l[int(s[-1])] in "W"):
         print("WATER!")
-        l[int(s[2])] = "X"
+        l[int(s[-1])] = "X"
         b[int(s[0])] = l
-        print(b)
         return(b)
-    
+
+def wrongPosition(s):
+    if(s[0] not in "01234"):
+        return(True)
+    if(s[1] != ":"):
+        return(True)
+    if(s[2] not in "01234"):
+        return(True)
+    if(len(s) != 3):
+        return(True)
+    return(False)
+
+def getOrientation():
+    opt = input("Would you like to place the boat vertically or horizontally? (v / h) ")
+    if(opt in "vV"):
+        print("'V'")
+        return("V")
+    elif(opt in "hH"):
+        print("'H'")
+        return("H")
+    else:
+        print("Sorry, this is not a valid option.")
+        getOrientation()
 
 applyPlay([["W","W","W","W","W"], ["X","X","X","X","X"], ["O","O","O","O","O"], ["W","W","W","W","W"], ["W","W","W","W","W"]], "3:0")
