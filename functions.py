@@ -88,4 +88,12 @@ def getOrientation():
         print("Sorry, this is not a valid option.")
         getOrientation()
 
+def getPosition():
+    opt = input("Initial box [row:column from 0 to 4]: ")
+    if((int(opt[0]) in range(0,4)) and (int(opt[2]) in range(0,4)) and (opt[1] == ":") and (len(opt) == 3)):
+        return(opt)
+    else:
+        print("Sorry, this is not a valid position.")
+        getPosition()
+
 applyPlay([["W","W","W","W","W"], ["X","X","X","X","X"], ["O","O","O","O","O"], ["W","W","W","W","W"], ["W","W","W","W","W"]], "3:0")
