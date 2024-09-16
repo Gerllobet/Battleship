@@ -88,12 +88,47 @@ def getOrientation():
         print("Sorry, this is not a valid option.")
         getOrientation()
 
-def getPosition():
+def getPosition(o):
     opt = input("Initial box [row:column from 0 to 4]: ")
-    if((int(opt[0]) in range(0,4)) and (int(opt[2]) in range(0,4)) and (opt[1] == ":") and (len(opt) == 3)):
-        return(opt)
+    if(0 == "H"):
+        if((int(opt[0]) in range(0,5)) and (int(opt[2]) in range(0,4)) and (opt[1] == ":") and (len(opt) == 3)):
+            return(opt)
+        else:
+            print("Sorry, this is not a valid position.")
+            getPosition(o)
     else:
-        print("Sorry, this is not a valid position.")
-        getPosition()
+        if((int(opt[0]) in range(0,4)) and (int(opt[2]) in range(0,5)) and (opt[1] == ":") and (len(opt) == 3)):
+            return(opt)
+        else:
+            print("Sorry, this is not a valid position.")
+            getPosition(o)
 
-applyPlay([["W","W","W","W","W"], ["X","X","X","X","X"], ["O","O","O","O","O"], ["W","W","W","W","W"], ["W","W","W","W","W"]], "3:0")
+def updateBoard(b, p, o):
+    if(o == "H"):
+        l = b[int(p[0])]
+        l[int(p[-1])] = "S"
+        l[int(p[-1]) + 1] = "S"
+        b[int(p[0])] = l
+        return b
+    else:
+        l1 = b[int(p[0])]
+        l2 = b[int(p[0])+1]
+        l1[int(p[-1])] = "S"
+        l2[int(p[-1])] = "S"
+        b[int(p[0])] = l1
+        b[int(p[0])+1] = l2
+        return b
+    
+def placeShip3(b, i):
+    if(str(i) in "123" and len(str(i)) == 1):
+        print("Reading the 3 positions ship number " + str(i))
+        o = getOrientation()
+        p = getPosition(o)
+        print(updateBoard(b, p, o))
+    else:
+        print("Sorry, some of the positions where you want to place this ship is already occupied or des not exist. Try again")
+        placeShip3(b, i)
+
+
+b = startBoard()
+placeShip3(b, 1)
