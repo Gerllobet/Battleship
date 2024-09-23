@@ -79,55 +79,61 @@ def wrongPosition(s):
 def getOrientation():
     opt = input("Would you like to place the boat vertically or horizontally? (v / h) ")
     if(opt in "vV"):
-        print("'V'")
         return("V")
     elif(opt in "hH"):
-        print("'H'")
         return("H")
     else:
         print("Sorry, this is not a valid option.")
         getOrientation()
 
-def getPosition(o):
+def getPosition():
     opt = input("Initial box [row:column from 0 to 4]: ")
-    if(0 == "H"):
-        if((int(opt[0]) in range(0,5)) and (int(opt[2]) in range(0,4)) and (opt[1] == ":") and (len(opt) == 3)):
-            return(opt)
-        else:
-            print("Sorry, this is not a valid position.")
-            getPosition(o)
+    if((int(opt[0]) in range(0,5)) and (int(opt[2]) in range(0,5)) and (opt[1] == ":") and (len(opt) == 3)):
+        return(opt)
     else:
-        if((int(opt[0]) in range(0,4)) and (int(opt[2]) in range(0,5)) and (opt[1] == ":") and (len(opt) == 3)):
-            return(opt)
-        else:
-            print("Sorry, this is not a valid position.")
-            getPosition(o)
+        print("Sorry, this is not a valid position.")
+        getPosition()
 
 def updateBoard(b, p, o):
     if(o == "H"):
         l = b[int(p[0])]
         l[int(p[-1])] = "S"
         l[int(p[-1]) + 1] = "S"
+        l[int(p[-1]) + 2] = "S"
         b[int(p[0])] = l
+        showBoard(b)
         return b
     else:
         l1 = b[int(p[0])]
         l2 = b[int(p[0])+1]
+        l3 = b[int(p[0])+2]
         l1[int(p[-1])] = "S"
         l2[int(p[-1])] = "S"
+        l3[int(p[-1])] = "S"
         b[int(p[0])] = l1
         b[int(p[0])+1] = l2
+        b[int(p[0])+2] = l3
+        showBoard(b)
         return b
     
-def placeShip3(b, i):
+def placeShip3(b, i):'''
     if(str(i) in "123" and len(str(i)) == 1):
-        print("Reading the 3 positions ship number " + str(i))
+        print("Reading the 3 positions ship number " + str(i))'''
+        p = getPosition()
         o = getOrientation()
-        p = getPosition(o)
-        print(updateBoard(b, p, o))
-    else:
-        print("Sorry, some of the positions where you want to place this ship is already occupied or des not exist. Try again")
-        placeShip3(b, i)
+        
+        if(o == "H"):
+            if(int(p[-1]) < 3):
+                return(updateBoard(b, p, o))
+            else:
+                print("Sorry, some of the positions where you want to place this ship is already occupied or des not exist. Try again")
+                placeShip3(b, i)
+        else:
+            if(int(p[0]) < 3):
+                return(updateBoard(b, p, o))
+            else:
+                print("Sorry, some of the positions where you want to place this ship is already occupied or des not exist. Try again")
+                placeShip3(b, i)
 
 
 b = startBoard()
