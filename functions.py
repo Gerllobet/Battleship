@@ -1,9 +1,9 @@
 def startBoard():
     row1 = ["W", "W", "W", "W", "W"]
     row2 = ["W", "W", "W", "W", "W"]    
-    row3 = ["W", "W", "W", "W", "W"]    
-    row4 = ["W", "W", "W", "W", "W"]    
-    row5 = ["W", "W", "W", "W", "W"]    
+    row3 = ["W", "W", "S", "W", "W"]    
+    row4 = ["W", "W", "S", "W", "W"]    
+    row5 = ["W", "W", "S", "W", "W"]    
     board = [row1, row2, row3, row4, row5]
     return(board)
 
@@ -88,11 +88,15 @@ def getOrientation():
 
 def getPosition():
     opt = input("Initial box [row:column from 0 to 4]: ")
-    if((int(opt[0]) in range(0,5)) and (int(opt[2]) in range(0,5)) and (opt[1] == ":") and (len(opt) == 3)):
-        return(opt)
-    else:
+    if(wrongPosition(opt)):
         print("Sorry, this is not a valid position.")
         getPosition()
+    else:
+        if((int(opt[0]) in range(0,5)) and (int(opt[2]) in range(0,5)) and (opt[1] == ":") and (len(opt) == 3)):
+            return(opt)
+        else:
+            print("Sorry, this is not a valid position.")
+            getPosition()
 
 def updateBoard(b, p, o):
     if(o == "H"):
@@ -116,21 +120,29 @@ def updateBoard(b, p, o):
         showBoard(b)
         return b
     
-def placeShip3(b, i):'''
+def placeShip3(b, i):
     if(str(i) in "123" and len(str(i)) == 1):
-        print("Reading the 3 positions ship number " + str(i))'''
+        print("Reading the 3 positions ship number " + str(i))
         p = getPosition()
         o = getOrientation()
         
         if(o == "H"):
             if(int(p[-1]) < 3):
-                return(updateBoard(b, p, o))
+                if(someBoxOccupied(b, (p[0]), (p[-1]),o)):
+                    return(updateBoard(b, p, o))
+                else:
+                    print("Sorry, some of the positions where you want to place this ship is already occupied or des not exist. Try again")
+                    placeShip3(b, i)
             else:
                 print("Sorry, some of the positions where you want to place this ship is already occupied or des not exist. Try again")
                 placeShip3(b, i)
         else:
             if(int(p[0]) < 3):
-                return(updateBoard(b, p, o))
+                if(someBoxOccupied(b, int(p[0]), int(p[-1]),o)):
+                    return(updateBoard(b, p, o))
+                else:
+                    print("Sorry, some of the positions where you want to place this ship is already occupied or des not exist. Try again")
+                    placeShip3(b, i)
             else:
                 print("Sorry, some of the positions where you want to place this ship is already occupied or des not exist. Try again")
                 placeShip3(b, i)
