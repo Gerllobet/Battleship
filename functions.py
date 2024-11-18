@@ -1,9 +1,9 @@
 def startBoard():
     row1 = ["W", "W", "W", "W", "W"]
     row2 = ["W", "W", "W", "W", "W"]    
-    row3 = ["W", "W", "S", "W", "W"]    
-    row4 = ["W", "W", "S", "W", "W"]    
-    row5 = ["W", "W", "S", "W", "W"]    
+    row3 = ["W", "W", "W", "W", "W"]    
+    row4 = ["W", "W", "W", "W", "W"]    
+    row5 = ["W", "W", "W", "W", "W"]    
     board = [row1, row2, row3, row4, row5]
     return(board)
 
@@ -109,7 +109,7 @@ def updateBoard(b, p, o):
         l[int(p[-1]) + 1] = "S"
         l[int(p[-1]) + 2] = "S"
         b[int(p[0])] = l
-        showBoard(b)
+        #showBoard(b)
         return b
     else:
         l1 = b[int(p[0])]
@@ -121,12 +121,15 @@ def updateBoard(b, p, o):
         b[int(p[0])] = l1
         b[int(p[0])+1] = l2
         b[int(p[0])+2] = l3
-        showBoard(b)
+        #showBoard(b)
         return b
     
 def placeShip3(b, i):
     if(str(i) in "123" and len(str(i)) == 1):
-        print("Reading the 3 positions ship number " + str(i))
+        if i == 3:
+            print("Reading the 3 positions ship number " + str(i))
+        else:
+            print("Reading the 3 positions ship number " + str(i) + " ")
         p = getPosition()
         o = getOrientation()
         
@@ -150,7 +153,10 @@ def placeShip3(b, i):
             else:
                 print("Sorry, some of the positions where you want to place this ship is already occupied or does not exist. Try again")
                 return placeShip3(b, i)
-
+            
+def placeShips(b):
+    print("You have 3 boats of 3 positions")
+    return placeShip3(placeShip3(placeShip3(b,1),2),3)
 
 b = startBoard()
-placeShip3(b, 1)
+placeShips(b)
